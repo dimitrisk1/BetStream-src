@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "CM2xwNJjHI8=",
+  "dgSpecHash": "oqO8ncQXhg0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\jkon2\\source\\repos\\BetStream.Application\\BetStream.Application.csproj",
+  "projectFilePath": "C:\\Users\\jkon2\\source\\repos\\BetStream-src\\BetStream.Application\\BetStream.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jkon2\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.25\\microsoft.entityframeworkcore.8.0.25.nupkg.sha512",
     "C:\\Users\\jkon2\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.25\\microsoft.entityframeworkcore.abstractions.8.0.25.nupkg.sha512",

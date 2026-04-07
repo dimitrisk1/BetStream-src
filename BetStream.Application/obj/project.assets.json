@@ -583,11 +583,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jkon2\\source\\repos\\BetStream.Application\\BetStream.Application.csproj",
+      "projectUniqueName": "C:\\Users\\jkon2\\source\\repos\\BetStream-src\\BetStream.Application\\BetStream.Application.csproj",
       "projectName": "BetStream.Application",
-      "projectPath": "C:\\Users\\jkon2\\source\\repos\\BetStream.Application\\BetStream.Application.csproj",
+      "projectPath": "C:\\Users\\jkon2\\source\\repos\\BetStream-src\\BetStream.Application\\BetStream.Application.csproj",
       "packagesPath": "C:\\Users\\jkon2\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jkon2\\source\\repos\\BetStream.Application\\obj\\",
+      "outputPath": "C:\\Users\\jkon2\\source\\repos\\BetStream-src\\BetStream.Application\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -608,8 +608,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\jkon2\\source\\repos\\BetStream.Domain\\BetStream.Domain.csproj": {
-              "projectPath": "C:\\Users\\jkon2\\source\\repos\\BetStream.Domain\\BetStream.Domain.csproj"
+            "C:\\Users\\jkon2\\source\\repos\\BetStream-src\\BetStream.Domain\\BetStream.Domain.csproj": {
+              "projectPath": "C:\\Users\\jkon2\\source\\repos\\BetStream-src\\BetStream.Domain\\BetStream.Domain.csproj"
             }
           }
         }
