@@ -1,0 +1,11 @@
+C:\Users\jkon2\source\repos\BetStream.Domain\bin\Debug\net8.0\BetStream.Domain.deps.json
+C:\Users\jkon2\source\repos\BetStream.Domain\bin\Debug\net8.0\BetStream.Domain.dll
+C:\Users\jkon2\source\repos\BetStream.Domain\bin\Debug\net8.0\BetStream.Domain.pdb
+C:\Users\jkon2\source\repos\BetStream.Domain\obj\Debug\net8.0\BetStream.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jkon2\source\repos\BetStream.Domain\obj\Debug\net8.0\BetStream.Domain.AssemblyInfoInputs.cache
+C:\Users\jkon2\source\repos\BetStream.Domain\obj\Debug\net8.0\BetStream.Domain.AssemblyInfo.cs
+C:\Users\jkon2\source\repos\BetStream.Domain\obj\Debug\net8.0\BetStream.Domain.csproj.CoreCompileInputs.cache
+C:\Users\jkon2\source\repos\BetStream.Domain\obj\Debug\net8.0\BetStream.Domain.dll
+C:\Users\jkon2\source\repos\BetStream.Domain\obj\Debug\net8.0\refint\BetStream.Domain.dll
+C:\Users\jkon2\source\repos\BetStream.Domain\obj\Debug\net8.0\BetStream.Domain.pdb
+C:\Users\jkon2\source\repos\BetStream.Domain\obj\Debug\net8.0\ref\BetStream.Domain.dll
