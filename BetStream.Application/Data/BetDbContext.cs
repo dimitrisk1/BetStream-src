@@ -23,8 +23,8 @@
             modelBuilder.Entity<Match>(b =>
             {
                 b.HasKey(m => m.Id);
-                b.Property(m => m.HomeOdds).HasColumnType("numeric(18,4)");
-                b.Property(m => m.AwayOdds).HasColumnType("numeric(18,4)");
+                b.Property(m => m.HomeOdds);//.HasColumnType("numeric(18,4)");
+                b.Property(m => m.AwayOdds);//.HasColumnType("numeric(18,4)");
                 b.HasOne(m => m.HomeTeam).WithMany(t => t.HomeMatches).HasForeignKey(m => m.HomeTeamId).OnDelete(DeleteBehavior.Restrict);
                 b.HasOne(m => m.AwayTeam).WithMany(t => t.AwayMatches).HasForeignKey(m => m.AwayTeamId).OnDelete(DeleteBehavior.Restrict);
                 b.Property(m => m.StartTime).IsRequired();
