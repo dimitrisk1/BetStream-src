@@ -62,7 +62,7 @@ jobs:
         run: dotnet restore ./BetStream/BetStream.csproj
 
       - name: Build
-        run: dotnet build ./BetStream.csproj --no-restore --configuration Release
+        run: dotnet build ./../../BetStream/BetStream.csproj --no-restore --configuration Release
 
       - name: Install dotnet-ef
         run: dotnet tool install --global dotnet-ef --version 8.0.0
