@@ -59,7 +59,7 @@ jobs:
           done
 
       - name: Restore dependencies
-        run: dotnet restore ./BetStream.Application.csproj
+        run: dotnet restore ./../../BetStream.Application.csproj
 
       - name: Build
         run: dotnet build ./BetStream.csproj --no-restore --configuration Release
