@@ -59,10 +59,10 @@ jobs:
           done
 
       - name: Restore dependencies
-        run: dotnet restore ./BetStream.sln
+        run: dotnet restore ./BetStream.csproj
 
       - name: Build
-        run: dotnet build ./BetStream.sln --no-restore --configuration Release
+        run: dotnet build ./BetStream.csproj --no-restore --configuration Release
 
       - name: Install dotnet-ef
         run: dotnet tool install --global dotnet-ef --version 8.0.0
@@ -76,4 +76,4 @@ jobs:
         run: dotnet ef database update -p BetStream.Application/BetStream.Application.csproj -s BetStream/BetStream.csproj
 
       - name: Test
-        run: dotnet test ./BetStream.sln --no-build --verbosity normal --configuration Release 
+        run: dotnet test ./BetStream.csproj --no-build --verbosity normal --configuration Release 
