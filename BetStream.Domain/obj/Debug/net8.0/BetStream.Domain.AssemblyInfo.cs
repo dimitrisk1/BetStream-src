@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BetStream.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1bd0654654d3c89a2c2e18d3251df81856abf630")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c880ada9dd27d71a887d35596bd6bea96eb1a7e9")]
 [assembly: System.Reflection.AssemblyProductAttribute("BetStream.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BetStream.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

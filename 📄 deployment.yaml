@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: betstream
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: betstream
+  template:
+    metadata:
+      labels:
+        app: betstream
+    spec:
+      containers:
+        - name: betstream
+          image: betstream-app
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
