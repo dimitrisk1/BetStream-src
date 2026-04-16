@@ -60,10 +60,10 @@ jobs:
           done
 
       - name: Restore dependencies
-        run: dotnet restore ./BetStream/BetStream.csproj
+        run: dotnet restore ./app/BetStream/BetStream.csproj
 
       - name: Build
-        run: dotnet build ./BetStream/BetStream.csproj --no-restore --configuration Release
+        run: dotnet build ./app/BetStream/BetStream.csproj --no-restore --configuration Release
 
       - name: Install dotnet-ef
         run: dotnet tool install --global dotnet-ef --version 8.0.0
@@ -74,7 +74,7 @@ jobs:
       - name: Apply EF migrations
         env:
           ConnectionStrings__DefaultConnection: ${{ env.ConnectionStrings__DefaultConnection }}
-        run: dotnet ef database update -p BetStream/BetStream.csproj -s BetStream/BetStream.csproj
+        run: dotnet ef database update -p app/BetStream/BetStream.csproj -s app/BetStream/BetStream.csproj
 
       - name: Test
-        run: dotnet test ./BetStream/BetStream.csproj --no-build --verbosity normal --configuration Release 
+        run: dotnet test ./app/BetStream/BetStream.csproj --no-build --verbosity normal --configuration Release 
