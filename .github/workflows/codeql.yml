@@ -33,7 +33,7 @@ jobs:
           languages: ${{ matrix.language }}
 
       - name: Build project
-        run: dotnet build BetStream/BetStream.csproj --configuration Release
+        run: dotnet build app/BetStream/BetStream.csproj --configuration Release
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
