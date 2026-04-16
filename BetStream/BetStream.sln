@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetStream.Domain", "..\BetS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetStream.Application", "..\BetStream.Application\BetStream.Application.csproj", "{7F82E65D-B568-47B6-9FD0-341D4D3D694A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetStream.Infrastucture", "..\BetStream.Infrastucture\BetStream.Infrastucture.csproj", "{5913783F-F793-4028-9412-95E50E4BC0AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7F82E65D-B568-47B6-9FD0-341D4D3D694A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F82E65D-B568-47B6-9FD0-341D4D3D694A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F82E65D-B568-47B6-9FD0-341D4D3D694A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5913783F-F793-4028-9412-95E50E4BC0AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5913783F-F793-4028-9412-95E50E4BC0AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5913783F-F793-4028-9412-95E50E4BC0AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5913783F-F793-4028-9412-95E50E4BC0AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

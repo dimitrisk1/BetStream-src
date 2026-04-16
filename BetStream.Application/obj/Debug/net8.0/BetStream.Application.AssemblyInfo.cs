@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BetStream.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c880ada9dd27d71a887d35596bd6bea96eb1a7e9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0011f4f0865880c7e266898855b912f93ff76259")]
 [assembly: System.Reflection.AssemblyProductAttribute("BetStream.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BetStream.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

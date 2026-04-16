@@ -1,4 +1,4 @@
-﻿namespace Infrastructure
+﻿namespace BetStream.Infrastucture
 {
     public class Class1
     {
