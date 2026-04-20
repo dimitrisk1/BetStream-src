@@ -34,6 +34,8 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 builder.Services.AddDbContext<BetDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddSingleton<KafkaProducer>();
+//builder.Services.AddHostedService<KafkaConsumerService>();
 
 
 builder.Services.AddControllers();
