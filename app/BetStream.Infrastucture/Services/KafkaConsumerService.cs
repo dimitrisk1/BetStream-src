@@ -1,4 +1,5 @@
 ﻿using Confluent.Kafka;
+using Microsoft.Extensions.Hosting;
 
 public class KafkaConsumerService : BackgroundService
 {
