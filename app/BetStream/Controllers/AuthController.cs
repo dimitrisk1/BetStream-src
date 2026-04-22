@@ -16,7 +16,6 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public IActionResult Login([FromBody] User loginOptions)
     {
-        // Dummy users (replace with DB)
         var users = new List<User>
         {
             new User { Username = "admin", Password = "123", Role = "Admin" },
