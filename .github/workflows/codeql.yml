@@ -1,4 +1,4 @@
-name: "Security Analysis (CodeQL & Trivy)"
+name: Security Analysis (CodeQL & Trivy)
 
 on:
   push:
@@ -39,6 +39,7 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
 
+      # --- Trivy Scan ---
       - name: Run Trivy vulnerability scanner (FS mode)
         uses: aquasecurity/trivy-action@master
         with:
@@ -50,19 +51,23 @@ jobs:
 
       - name: Upload Trivy scan results
         uses: github/codeql-action/upload-sarif@v3
-        if: always() 
+        if: always()
         with:
           sarif_file: 'trivy-results.sarif'
-          category: 'trivy' 
-   
-   gitleaks:
+          category: 'trivy'
+
+  gitleaks:
     name: Gitleaks Secret Scan
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
     steps:
       - name: Checkout repository (Full History)
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Required for Gitleaks to scan all past commits
+          fetch-depth: 0
 
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v2
