@@ -1,24 +1,29 @@
-﻿namespace BetStream.Infrastucture.Services
+namespace BetStream.Infrastucture.Services
 {
+    using BetStream.Infrastucture.Options;
     using Confluent.Kafka;
+    using Microsoft.Extensions.Options;
 
     public class KafkaProducer
     {
         private readonly IProducer<Null, string> _producer;
+        private readonly KafkaOptions _options;
 
-        public KafkaProducer()
+        public KafkaProducer(IOptions<KafkaOptions> options)
         {
+            _options = options.Value;
+
             var config = new ProducerConfig
             {
-                BootstrapServers = "localhost:9092"
+                BootstrapServers = _options.BootstrapServers
             };
 
             _producer = new ProducerBuilder<Null, string>(config).Build();
         }
 
-        public async Task SendMessage(string topic, string message)
+        public async Task SendMessage(string message)
         {
-            await _producer.ProduceAsync(topic, new Message<Null, string>
+            await _producer.ProduceAsync(_options.Topic, new Message<Null, string>
             {
                 Value = message
             });

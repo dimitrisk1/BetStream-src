@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BetStream.Controllers
@@ -9,17 +7,16 @@ namespace BetStream.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetAdminAccountInfo()
+        public IActionResult GetAdminAccountInfo()
         {
-
             var accountInfo = new
             {
-                Username = User.Identity.Name,
-                Email = ""
+                Username = User.Identity?.Name ?? string.Empty,
+                Email = string.Empty
             };
+
             return Ok(accountInfo);
         }
     }

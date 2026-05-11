@@ -10,32 +10,40 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  build-test-package:
     runs-on: ubuntu-latest
 
     services:
       postgres:
-        image: postgres:15
+        image: postgres:16
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: example
-          POSTGRES_DB: betstream_test
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: betstream
         ports:
           - 5432:5432
         options: >-
           --health-cmd="pg_isready -U postgres" --health-interval=10s --health-timeout=5s --health-retries=5
 
     env:
-      ConnectionStrings__DefaultConnection: Host=localhost;Port=5432;Database=betstream_test;Username=postgres;Password=example
+      ConnectionStrings__DefaultConnection: Host=localhost;Port=5432;Database=betstream;Username=postgres;Password=postgres
+      Kafka__BootstrapServers: localhost:9092
+      Kafka__Topic: betstream.messages
+      Kafka__ConsumerGroupId: betstream-consumers
+      Jwt__Key: change-this-development-only-key-1234567890
+      Jwt__Issuer: BetStream
+      Jwt__Audience: BetStreamUsers
 
     steps:
       - uses: actions/checkout@v4
-      - name: Debug files
-        run: ls -R
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
+
+      - name: Setup Helm
+        uses: azure/setup-helm@v4
 
       - name: Cache NuGet packages
         uses: actions/cache@v4
@@ -45,7 +53,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
-      - name: Install psql client
+      - name: Install PostgreSQL client
         run: sudo apt-get update && sudo apt-get install -y postgresql-client
 
       - name: Wait for Postgres to be ready
@@ -65,16 +73,17 @@ jobs:
       - name: Build
         run: dotnet build ./app/BetStream/BetStream.csproj --no-restore --configuration Release
 
-      - name: Install dotnet-ef
-        run: dotnet tool install --global dotnet-ef --version 8.0.0
-
-      - name: Add dotnet tools to PATH
-        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
-
-      - name: Apply EF migrations
-        env:
-          ConnectionStrings__DefaultConnection: ${{ env.ConnectionStrings__DefaultConnection }}
-        run: dotnet ef database update -p app/BetStream/BetStream.csproj -s app/BetStream/BetStream.csproj
+      - name: Bootstrap database schema
+        run: PGPASSWORD=postgres psql -h localhost -U postgres -d betstream -f app/BetStream/database/schema.sql
 
       - name: Test
         run: dotnet test ./app/BetStream/BetStream.csproj --no-build --verbosity normal --configuration Release 
+
+      - name: Validate Docker Compose
+        run: docker compose config
+
+      - name: Lint Helm chart
+        run: helm lint ./betstream-chart
+
+      - name: Build container image
+        run: docker build -t betstream-app:ci ./app

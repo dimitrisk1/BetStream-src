@@ -1,191 +1,102 @@
-# 🚀 BetStream DevOps Project
+# BetStream DevOps Project
 
-## 📦 Overview
+BetStream is a .NET 8 API packaged for Docker, deployable with raw Kubernetes manifests or Helm, observable with Prometheus, and installable into an existing cluster through Terraform.
 
-End-to-end DevOps project using:
+## What This Repo Covers
 
-* ASP.NET Core
-* Docker
-* Kubernetes
-* Terraform
-* Prometheus & Grafana
+- ASP.NET Core API with Prometheus metrics and readiness/liveness endpoints
+- Docker Compose stack for local API, PostgreSQL, Kafka, Prometheus, and Grafana
+- Kubernetes manifests with config separation and health probes
+- Helm chart with configurable image, runtime config, secrets, and resources
+- GitHub Actions for build, schema bootstrap, test, compose validation, container build, and security scans
+- Terraform to install the Helm chart into an existing Kubernetes cluster
 
----
+## Prerequisites
 
-# ⚙️ Prerequisites
+- Docker and Docker Compose
+- .NET 8 SDK
+- kubectl and a Kubernetes cluster such as Minikube, kind, or Docker Desktop Kubernetes
+- Helm 3
+- Terraform 1.6+
 
-Make sure you have installed:
+## Local Development
 
-* Docker
-* Kubernetes (Docker Desktop / Minikube)
-* kubectl
-* Terraform
-* Azure CLI (optional for cloud)
-
----
-
-# 🐳 1. Build Docker Image
-
-```bash
-docker build -t betstream-app ./app
-```
-
----
-
-# 🐳 2. Run Locally (Docker Compose)
+Run the full stack:
 
 ```bash
 docker compose up --build
 ```
 
-👉 App:
+Endpoints:
 
-```
-http://localhost:8080
-```
+- API: [http://localhost:8080](http://localhost:8080)
+- Swagger: [http://localhost:8080/swagger](http://localhost:8080/swagger)
+- Live health: [http://localhost:8080/health/live](http://localhost:8080/health/live)
+- Ready health: [http://localhost:8080/health/ready](http://localhost:8080/health/ready)
+- Metrics: [http://localhost:8080/metrics](http://localhost:8080/metrics)
+- Prometheus: [http://localhost:9090](http://localhost:9090)
+- Grafana: [http://localhost:3000](http://localhost:3000)
 
----
+Default Grafana login:
 
-# ☸️ 3. Run in Kubernetes
+- Username: `admin`
+- Password: `admin`
 
-## Apply manifests
+## Kubernetes Manifests
+
+Apply the manifests:
 
 ```bash
 kubectl apply -f k8s/
 ```
 
-## Check pods
-
-```bash
-kubectl get pods
-```
-
-## Check services
-
-```bash
-kubectl get svc
-```
-
----
-
-# 🌐 4. Access Application
-
-## Option A (port-forward)
+Port-forward the service:
 
 ```bash
 kubectl port-forward svc/betstream-service 8080:80
 ```
 
-👉 Open:
+The manifests expect supporting services such as PostgreSQL and Kafka to already exist in the cluster and expose the hostnames used in `k8s/configmap.yaml`.
 
-```
-http://localhost:8080
-```
+## Helm
 
----
-
-# 📊 5. Metrics Endpoint
+Install the chart:
 
 ```bash
-http://localhost:8080/metrics
+helm upgrade --install betstream ./betstream-chart
 ```
 
----
-
-# 📈 6. Monitoring (Prometheus + Grafana)
-
-## Run monitoring stack
+Override the image at deploy time:
 
 ```bash
-docker compose up prometheus grafana
+helm upgrade --install betstream ./betstream-chart \
+  --set image.repository=ghcr.io/your-org/betstream \
+  --set image.tag=1.0.0
 ```
 
-## Access Grafana
+## Terraform
 
-```
-http://localhost:3000
-```
-
-👉 Default login:
-
-* user: admin
-* password: admin
-
----
-
-# 📝 7. Logs (Loki)
-
-```bash
-docker compose up loki promtail
-```
-
-👉 Add Loki in Grafana:
-
-```
-http://loki:3100
-```
-
----
-
-# ☁️ 8. Infrastructure (Terraform)
+Terraform deploys the Helm chart into an existing Kubernetes cluster:
 
 ```bash
 cd terraform
-
 terraform init
-terraform plan
-terraform apply
+terraform plan -var="image_repository=ghcr.io/your-org/betstream" -var="image_tag=1.0.0"
+terraform apply -var="image_repository=ghcr.io/your-org/betstream" -var="image_tag=1.0.0"
 ```
 
----
+## CI/CD
 
-# 🔁 9. CI/CD (GitHub Actions)
+`/.github/workflows/ci-cd.yml` currently validates:
 
-Pipeline automatically:
+- .NET restore, build, and test
+- PostgreSQL schema bootstrap using `schema.sql`
+- Docker Compose configuration
+- Docker image build
 
-* Builds application
-* Runs tests
-* Builds Docker image
-* Pushes to registry
-* Deploys to Kubernetes
+`/.github/workflows/codeql.yml` runs CodeQL, Trivy, and Gitleaks for code and supply-chain hygiene.
 
----
+## Notes
 
-# 🧪 10. Run Tests Locally
-
-```bash
-dotnet test
-```
-
----
-
-# 🗄️ 11. Run Database Migrations
-
-```bash
-dotnet ef database update -p BetStream/BetStream.csproj -s BetStream/BetStream.csproj
-```
-
----
-
-# 🧹 12. Cleanup
-
-```bash
-kubectl delete -f k8s/
-docker compose down
-```
-
----
-
-# 💡 Architecture Flow
-
-```
-Terraform → Azure → Kubernetes → Docker → ASP.NET App
-                         ↓
-                Prometheus / Grafana / Loki
-```
-
----
-
-# 🚀 Author
-
-Jim 
+- Runtime configuration is environment-variable driven for database, Kafka, and JWT settings.
+- The Kubernetes and Helm examples include placeholder values for secrets and image repository; replace them before deploying beyond local/demo environments.

@@ -40,9 +40,32 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: {{ .Values.config.aspnetcoreEnvironment | quote }}
+            - name: ConnectionStrings__DefaultConnection
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "betstream-chart.fullname" . }}-secrets
+                  key: connectionString
+            - name: Kafka__BootstrapServers
+              value: {{ .Values.config.kafkaBootstrapServers | quote }}
+            - name: Kafka__Topic
+              value: {{ .Values.config.kafkaTopic | quote }}
+            - name: Kafka__ConsumerGroupId
+              value: {{ .Values.config.kafkaConsumerGroupId | quote }}
+            - name: Jwt__Issuer
+              value: {{ .Values.config.jwtIssuer | quote }}
+            - name: Jwt__Audience
+              value: {{ .Values.config.jwtAudience | quote }}
+            - name: Jwt__Key
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "betstream-chart.fullname" . }}-secrets
+                  key: jwtKey
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.service.targetPort }}
               protocol: TCP
           {{- with .Values.livenessProbe }}
           livenessProbe:

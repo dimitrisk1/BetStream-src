@@ -18,6 +18,15 @@
 
         public string GenerateToken(User user)
         {
+            var jwtKey = _config["Jwt:Key"]
+                ?? throw new InvalidOperationException("Jwt:Key configuration is required.");
+            var jwtIssuer = _config["Jwt:Issuer"]
+                ?? throw new InvalidOperationException("Jwt:Issuer configuration is required.");
+            var jwtAudience = _config["Jwt:Audience"]
+                ?? throw new InvalidOperationException("Jwt:Audience configuration is required.");
+            var tokenDuration = _config["Jwt:DurationInMinutes"]
+                ?? throw new InvalidOperationException("Jwt:DurationInMinutes configuration is required.");
+
             var claims = new[]
             {
             new Claim(ClaimTypes.Name, user.Username),
@@ -25,17 +34,17 @@
         };
 
             var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_config["Jwt:Key"])
+                Encoding.UTF8.GetBytes(jwtKey)
             );
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: _config["Jwt:Issuer"],
-                audience: _config["Jwt:Audience"],
+                issuer: jwtIssuer,
+                audience: jwtAudience,
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(
-                    double.Parse(_config["Jwt:DurationInMinutes"])
+                    double.Parse(tokenDuration)
                 ),
                 signingCredentials: creds
             );

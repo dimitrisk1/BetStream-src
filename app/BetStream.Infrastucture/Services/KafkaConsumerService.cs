@@ -1,24 +1,41 @@
-﻿using Confluent.Kafka;
+using BetStream.Infrastucture.Options;
+using Confluent.Kafka;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
-public class KafkaConsumerService : BackgroundService
+namespace BetStream.Infrastucture.Services
 {
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    public class KafkaConsumerService : BackgroundService
     {
-        var config = new ConsumerConfig
-        {
-            BootstrapServers = "localhost:9092",
-            GroupId = "my-group",
-            AutoOffsetReset = AutoOffsetReset.Earliest
-        };
+        private readonly KafkaOptions _options;
+        private readonly ILogger<KafkaConsumerService> _logger;
 
-        using var consumer = new ConsumerBuilder<Ignore, string>(config).Build();
-        consumer.Subscribe("test-topic");
-
-        while (!stoppingToken.IsCancellationRequested)
+        public KafkaConsumerService(IOptions<KafkaOptions> options, ILogger<KafkaConsumerService> logger)
         {
-            var result = consumer.Consume(stoppingToken);
-            Console.WriteLine($"Received: {result.Message.Value}");
+            _options = options.Value;
+            _logger = logger;
+        }
+
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            var config = new ConsumerConfig
+            {
+                BootstrapServers = _options.BootstrapServers,
+                GroupId = _options.ConsumerGroupId,
+                AutoOffsetReset = AutoOffsetReset.Earliest
+            };
+
+            using var consumer = new ConsumerBuilder<Ignore, string>(config).Build();
+            consumer.Subscribe(_options.Topic);
+
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                var result = consumer.Consume(stoppingToken);
+                _logger.LogInformation("Received message from Kafka topic {Topic}: {Message}", _options.Topic, result.Message.Value);
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

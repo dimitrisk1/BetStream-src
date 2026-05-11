@@ -18,7 +18,7 @@ namespace BetStream.Controllers
         [HttpPost]
         public async Task<IActionResult> Send(string message)
         {
-            await _producer.SendMessage("test-topic", message);
+            await _producer.SendMessage(message);
             return Ok("Message sent to Kafka");
         }
     }

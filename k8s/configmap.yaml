@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: betstream-config
+data:
+  ASPNETCORE_ENVIRONMENT: Production
+  Kafka__BootstrapServers: kafka:9092
+  Kafka__Topic: betstream.messages
+  Kafka__ConsumerGroupId: betstream-consumers
+  Jwt__Issuer: BetStream
+  Jwt__Audience: BetStreamUsers
